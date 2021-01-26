@@ -1,9 +1,18 @@
 ---
-- name: playbook to update with atp 
+- name: playbook to update with apt
   hosts: linux
   tasks:
-  - name: update its cache
-    become: yes
+  - name: update all apps for debian family
     apt:
+      name: "*"
+      state: latest
       update_cache: yes
-      
+    become: yes
+    when: ansible_os_family == "Debian"
+
+  - name: update all apps for redhat family
+    yum:
+      name: "*"
+      state: latest
+    become: yes
+    when: ansible_os_family == "Red Hat" 
