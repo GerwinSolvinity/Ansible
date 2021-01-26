@@ -1,0 +1,9 @@
+---
+- name: playbook to update with atp 
+  hosts: linux
+  tasks:
+  - name: update its cache
+    become: yes
+    apt:
+      update_cache: yes
+      
