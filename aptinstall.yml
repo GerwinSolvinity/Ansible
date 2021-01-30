@@ -1,0 +1,15 @@
+---
+- hosts: linux
+  become: true
+  tasks:
+  - name: make sure we can connect to the host
+    ping:
+  - name: install required software packages
+    apt:
+      name: "{{ item }}" 
+      state: present
+      update_cache: yes
+    with_items:
+      - php-cli
+      - nginx
+      - mysql-server
