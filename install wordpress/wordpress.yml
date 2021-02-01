@@ -1,0 +1,13 @@
+---
+- hosts: linuxclient2
+  become: true
+  tasks:
+    - name: make sure we can connect
+      ping:
+    #PHP
+    - name: Add the ondrej PHP PPA
+      apt_repository: repo='ppa:ondrej/php'
+    - name: update the apt cache
+      apt: update_cache=yes cache_valid_time=3600
+    - name: install PHP
+      apt: name=php state-installed.
