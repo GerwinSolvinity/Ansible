@@ -1,13 +1,37 @@
 ---
-- hosts: linuxclient2
-  become: true
+- hosts: linux2
+  become: yes
   tasks:
     - name: make sure we can connect
       ping:
-    #PHP
-    - name: Add the ondrej PHP PPA
+    - name: add the ondrej PHP PPA
       apt_repository: repo='ppa:ondrej/php'
-    - name: update the apt cache
+    - name: udate the apt chache
       apt: update_cache=yes cache_valid_time=3600
-    - name: install PHP
-      apt: name=php state-installed.
+    - name: Install PHP
+      apt: name={{item}} state=latest
+      with_items:
+        - php
+        - php-fpm
+        - php-mysql
+        - php-xml
+#remove apache
+    - name: remove apached2
+      apt: name=apache2 state=absent
+# mysql
+    - name: install mysql
+      apt: name{{item}} state=latest
+      with_items:
+        - mysql-server
+        - mysql-client
+        - python-mysqldb
+        - pymysql
+        - mysql-python
+        - libmysqlclient-dev
+    - name: generate new root password
+      command: openssl rand -hex 7
+      register: mysql_new_root_pass
+    - name: remove anonymous user
+      mysql_user: name="" state=absent
+    - name: remove test database
+      mysql_db: name=test state=absent
