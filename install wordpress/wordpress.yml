@@ -29,9 +29,12 @@
         - mysql-python
         - libmysqlclient-dev
     - name: generate new root password
-      command: openssl rand -hex 7
+      command: openssl rand -hex 7 creates=/root/.my.cnf
       register: mysql_new_root_pass
-    - name: remove anonymous user
-      mysql_user: name="" state=absent
-    - name: remove test database
-      mysql_db: name=test state=absent
+    - name: output new root password
+      debug: msg="new root password is {{mysql_new_root_pass.stdout}}"
+      when: mysql_new_root_pass.changed
+    - name: create my.cnf
+      template: src=mysql/my.cnf dest=/root/.my.cnf
+      when: mysql_new_root_pass.changed
+
