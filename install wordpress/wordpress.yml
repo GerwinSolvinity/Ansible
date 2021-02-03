@@ -1,6 +1,6 @@
 ---
 - name: install a lamp server 
-  hosts: wordpress
+  hosts: linux2
   become: yes
   gather_facts: yes
   tasks:

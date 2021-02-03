@@ -1,0 +1,19 @@
+---
+- name: windows module running
+  hosts: windowsserver
+  gather_facts: yes
+  tasks:
+    - name: create a new group dev
+      win_group:
+        name: devops
+        description: devops group
+        state: present
+
+    - name: create a new user in the devops group
+      win_user:
+        name: devopsuser1
+        password: Corana@2021Hoogeveen
+        state: present
+        groups:
+          - devops
+          
