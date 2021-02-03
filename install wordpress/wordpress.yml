@@ -1,40 +1,67 @@
 ---
-- hosts: linux2
+- name: install a lamp server 
+  hosts: wordpress
   become: yes
+  gather_facts: yes
   tasks:
     - name: make sure we can connect
       ping:
-    - name: add the ondrej PHP PPA
-      apt_repository: repo='ppa:ondrej/php'
-    - name: udate the apt chache
-      apt: update_cache=yes cache_valid_time=3600
-    - name: Install PHP
-      apt: name={{item}} state=latest
+    - name: install LAMP Server
+      apt:
+        name: '{{ item }}'
+        state: latest
+        update_cache: yes
       with_items:
-        - php
-        - php-fpm
-        - php-mysql
-        - php-xml
-#remove apache
-    - name: remove apached2
-      apt: name=apache2 state=absent
-# mysql
-    - name: install mysql
-      apt: name{{item}} state=latest
-      with_items:
-        - mysql-server
-        - mysql-client
-        - python-mysqldb
-        - pymysql
-        - mysql-python
-        - libmysqlclient-dev
-    - name: generate new root password
-      command: openssl rand -hex 7 creates=/root/.my.cnf
-      register: mysql_new_root_pass
-    - name: output new root password
-      debug: msg="new root password is {{mysql_new_root_pass.stdout}}"
-      when: mysql_new_root_pass.changed
-    - name: create my.cnf
-      template: src=mysql/my.cnf dest=/root/.my.cnf
-      when: mysql_new_root_pass.changed
+          - apache2
+          - mysql-server
+          - php
+          - libapache2-mod-php
+          - python-mysqldb
 
+    - name: create the Apache2 web folder
+      file:
+        dest: "/var/www"
+        state: directory
+        mode: 0700
+        owner: "www-data"
+        group: "www-data"
+      
+    - name: setup apache2 modules
+      command: a2enmod {{ item }} create=/etc/apache2/mods-enabled/ {{ item }}.load
+      with_items:
+        - deflater
+        - expires
+        - headers
+        - macro
+        - rewrite 
+        - rax_clb_ssl
+      
+    - name: setp php modules
+      apt:
+        name: '{{ itemt }}'
+        state: latest
+        update_cahche: yes
+      with_items:
+        - php-ssh2
+        - php-apcu
+        - php-pear
+        - php-curl
+        - php-gd
+        - php-imagick
+        - php-mcrypt
+        - php-mysql
+        - php-json
+
+    - name: remove mysql test database
+      mysql_db: db=test state=absent login_user=root
+      login_password="DBp@55w0rd"
+    
+    - name: restart mysql server
+      service:
+        name: mysql
+        state: restarted
+
+    - name: restart apache2
+      service:
+        name: apache2
+        state: restarted
