@@ -1,19 +1,20 @@
 ---
-- name: windows module running
-  hosts: windowsserver
-  gather_facts: yes
+- name: create new user and add to group
+  hosts: domaincontroller
   tasks:
-    - name: create a new group dev
-      win_group:
-        name: devops
-        description: devops group
+    - name: create user and add to group
+      win_domain_user:
+        name: "Finn"
+        firstname: "Finn"
+        surname: "van Erkelens"
+        company: "zinldc"
+        password: "Corona@2021Hoogeveen"
         state: present
-
-    - name: create a new user in the devops group
-      win_user:
-        name: devopsuser1
-        password: Corana@2021Hoogeveen
-        state: present
+        path: "OU=AnsibleUsers,DC=ansible,DC=local"
         groups:
-          - devops
-          
+          - "Ansible Users"
+          - "Ansible Users1"
+          - "Ansible Users2"
+
+        
+        

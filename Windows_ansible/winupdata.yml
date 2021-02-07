@@ -1,0 +1,4 @@
+---
+- name: copy folders and files
+  hosts: windowsserver
+  win_copy:

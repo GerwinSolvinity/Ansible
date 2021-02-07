@@ -1,0 +1,10 @@
+---
+- name: create new group
+  hosts: domaincontroller
+  tasks:
+    - win_domain_group:
+       name: Ansible Users1
+       scope: universal
+       category: security
+       organizational_unit: OU=Ansiblegroups,DC=ansible,DC=local
+       ignore_protection: yes
