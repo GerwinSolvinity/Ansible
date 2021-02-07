@@ -4,8 +4,8 @@
   tasks:
     - name: create user and add to group
       win_domain_user:
-        name: "Finn"
-        firstname: "Finn"
+        name: "thor"
+        firstname: "thor"
         surname: "van Erkelens"
         company: "zinldc"
         password: "Corona@2021Hoogeveen"

@@ -2,6 +2,7 @@
 - name: copy files and folders.
   hosts: windowsserver
   tasks:
-    win_copy:
-      src: /mnt/ansible/files/folder1/file1.txt
-      dest: c:\temp
+      - win_copy:
+          src: /mnt/ansible/ 
+          dest: d:\temp\
+         
