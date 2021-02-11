@@ -5,7 +5,7 @@
     - name: create user and add to group
       win_domain_user:
         name: "{{ RD_OPTION_USERNAME }}" 
-        firstname: "{{ RD_OPTION_FIRSTNAME}}" 
+        firstname: "{{ RD_OPTION_FIRSTNAME }}" 
         surname: "{{ RD_OPTION_SURNAME }}" 
         company: "zinldc"
         password: "Corona@2021Hoogeveen"
