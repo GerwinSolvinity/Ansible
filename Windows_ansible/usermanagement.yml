@@ -4,9 +4,9 @@
   tasks:
     - name: create user and add to group
       win_domain_user:
-        name: "thor"
-        firstname: "thor"
-        surname: "van Erkelens"
+        name: "{{ RD_OPTION_USERNAME }}" 
+        firstname: "{{ RD_OPTION_FIRSTNAME}}" 
+        surname: "{{ RD_OPTION_SURNAME }}" 
         company: "zinldc"
         password: "Corona@2021Hoogeveen"
         state: present
