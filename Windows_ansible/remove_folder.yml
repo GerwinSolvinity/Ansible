@@ -1,0 +1,9 @@
+---
+- hosts: "domaincontroller"
+  tasks:
+    - name: "backup folder in zip bestand"
+      win_shell: Compress-Archive -Path E:\\rundeck\\{{ rd_option_foldername }} -DestinationPath e:\\rundeck\\archive\\{{ rd_option_foldername }}.zip
+    - name: "remove folder"
+      win_file:
+        path: "e:\\rundeck\\{{ rd_option_foldername }}"
+        state: "absent"

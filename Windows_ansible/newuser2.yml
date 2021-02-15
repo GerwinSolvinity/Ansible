@@ -1,0 +1,58 @@
+---
+ 
+- name: "New user"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "Check if the user exists"
+      win_domain_user:
+        name: "{{ rd_option_username }}"
+        state: "query"
+      register: "user_check"
+    - name: "Fail if user is found"
+      fail:
+        msg: "'{{ user_check.name }}' already exists"
+      when:
+        - "user_check.state == 'present'"
+    - set_fact:
+        user_password: "aC{{ lookup('password', '/dev/null length=7 chars=digits') }}!"
+    - name: "Create user"
+      win_domain_user:
+        name: "{{ rd_option_username }}"
+        firstname: "{{ rd_option_firstname }}"
+        surname: "{{ rd_option_surname }}"
+        upn: "{{ rd_option_email }}"
+        password: "{{ user_password }}"
+        state: "present"
+        groups:
+          - "Domain Users"
+          - "ansible users"
+          - "ansible users1"
+          - "ansible users2"
+        groups_action: "add"
+        path: ""OU=AnsibleUsers,DC=ansible,DC=local"
+        attributes:
+          mobile: "{{ rd_option_mobilephone }}"
+    - name: "Send the username trough a sms"
+      uri:
+        url: 'https://rest.messagebird.com/messages'
+        method: "POST"
+        body: "recipients={{ rd_option_mobilephone | regex_replace('\\+', '') | regex_replace(' ', '') }}&originator=Solvinity&body=Uw {{ rd_option_company }} account is aangemaakt. Uw gebruikersnaam: {{ rd_option_username }}"
+        status_code: 201
+        headers:
+          Authorization: "AccessKey {{ messagebird_accesskey }}"
+      environment:
+        http_proxy: "http://global.proxy.internal.asp4all.nl:8080"
+        https_proxy: "http://global.proxy.internal.asp4all.nl:8080"
+      delegate_to: "localhost"
+    - name: "Send the password trough a sms"
+      uri:
+        url: 'https://rest.messagebird.com/messages'
+        method: "POST"
+        body: "recipients={{ rd_option_mobilephone | regex_replace('\\+', '') | regex_replace(' ', '') }}&originator=Solvinity&body=Uw {{ rd_option_company }} account is aangemaakt. Uw wachtwoord: {{ user_password }}"
+        status_code: 201
+        headers:
+          Authorization: "AccessKey {{ messagebird_accesskey }}"
+      environment:
+        http_proxy: "http://global.proxy.internal.asp4all.nl:8080"
+        https_proxy: "http://global.proxy.internal.asp4all.nl:8080"
+      delegate_to: "localhost"

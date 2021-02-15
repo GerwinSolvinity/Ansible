@@ -1,0 +1,14 @@
+---
+- hosts: "domaincontroller"
+  tasks:
+    - name: "create directory on remote host"
+      win_file:
+        path: "E:\\rundeck\\{{ rd_option_foldername }}"
+        state: "directory"
+    - name: "add group to new folder"
+      win_acl:
+        user: "{{ rd_option_groupname }}"
+        path: "E:\\rundeck\\{{ rd_option_foldername }}"
+        rights: "{{ rd_option_rights }}"
+        state: present
+        type: allow

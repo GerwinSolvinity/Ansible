@@ -1,8 +1,7 @@
 ---
-- name: copy files and folders.
-  hosts: windowsserver
+- name: "copy files and folders."
+  hosts: "domaincontroller"
   tasks:
       - win_copy:
-          src: /mnt/ansible/ 
-          dest: d:\temp\
-         
+          src: "/mnt/ansible/"
+          dest: "e:\\rundeck\\{{ rd_option_foldername}}"
