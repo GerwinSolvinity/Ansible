@@ -1,0 +1,5 @@
+---
+  - hosts: "domaincontroller"
+    tasks:
+    - name: "check option variables"
+      debug: msg="option username is "{{username}}"

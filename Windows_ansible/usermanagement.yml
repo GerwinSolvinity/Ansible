@@ -1,15 +1,16 @@
 ---
-- name: create new user and add to group
-  hosts: domaincontroller
+- name: "create new user and add to group"
+  hosts: "domaincontroller"
   tasks:
-    - name: create user and add to group
+    - name: "create user and add to group"
       win_domain_user:
-        name: "{{ RD_OPTION_USERNAME }}" 
-        firstname: "{{ RD_OPTION_FIRSTNAME }}" 
-        surname: "{{ RD_OPTION_SURNAME }}" 
-        company: "zinldc"
+        name: "{{ rd_option_name }}"
+        firstname: "{{ rd_option_firstname }}"
+        surname: " {{ rd_option_surname }}"
+        username: " {{ rd_option_username }}"
+        company: "ansible"
         password: "Corona@2021Hoogeveen"
-        state: present
+        state: "present"
         path: "OU=AnsibleUsers,DC=ansible,DC=local"
         groups:
           - "Ansible Users"
