@@ -2,12 +2,11 @@
 - name: "create new user and add to group"
   hosts: "domaincontroller"
   tasks:
-    - name: "create user and add to group"
-      win_domain_user:
-        name: "{{ rd_option_name }}"
-        firstname: "{{ rd_option_firstname }}"
-        surname: " {{ rd_option_surname }}"
-        username: " {{ rd_option_username }}"
+    - win_domain_user:
+        name: "{{ option.name }}"
+        firstname: "{{ option.firstname }}"
+        surname: "{{ option.surname }}"
+        username: "{{ option.username }}"
         company: "ansible"
         password: "Corona@2021Hoogeveen"
         state: "present"
