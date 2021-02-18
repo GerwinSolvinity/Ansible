@@ -1,0 +1,14 @@
+---
+- hosts: "domaincontroller"
+  tasks:
+    - name: "check of de folder backup folder al bestaat"
+      win_stat:
+        path: "e:\\backuphernoem"
+      register: "folder_info"
+    - name: "bericht dat backuphernoem bestaat"
+      fail:
+        msg: "'backuphernoem bestaat al verwijder eerst de folder met de verwijder backup profile folder job"
+      when:
+        - "folder_info.stat.exists"
+    - name: "hernoem de backup folder"
+      win_shell: "rename-item e:\\hernoem e:\\backuphernoem"
