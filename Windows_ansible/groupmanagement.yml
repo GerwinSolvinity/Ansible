@@ -1,9 +1,9 @@
 ---
-- name: create new group
+- name: "create new group"
   hosts: domaincontroller
   tasks:
     - win_domain_group:
-       name: Ansible Users1
+       name: Ansible Users5
        scope: universal
        category: security
        organizational_unit: OU=Ansiblegroups,DC=ansible,DC=local

@@ -3,10 +3,10 @@
   hosts: "domaincontroller"
   tasks:
     - win_domain_user:
-        name: "{{ option.name }}"
-        firstname: "{{ option.firstname }}"
-        surname: "{{ option.surname }}"
-        username: "{{ option.username }}"
+        name: "{{ name }}"
+        firstname: "{{ firstname }}"
+        surname: "{{ surname }}"
+        username: "{{ username }}"
         company: "ansible"
         password: "Corona@2021Hoogeveen"
         state: "present"
