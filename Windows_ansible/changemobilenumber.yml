@@ -1,0 +1,6 @@
+---
+- name: "change mobile number of user"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "change mobile number of user"
+      win_shell: set-aduser -identity {{ rd_option_username }} -MobilePhone {{ rd_option_mobielnummer }}

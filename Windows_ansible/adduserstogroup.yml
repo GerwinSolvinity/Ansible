@@ -4,6 +4,6 @@
   tasks:
     - name: "Add user to group"
       win_domain_user:
-        name: "{{ rd_option_username.split }}"
+        name: "{{ rd_option_username }}"
         groups_action: "add"
         groups: "{{ rd_option_groupnames.split(',') }}"
