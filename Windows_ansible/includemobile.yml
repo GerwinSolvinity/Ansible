@@ -1,11 +1,10 @@
 ---
-- name: "change mobile number of user"
-  hosts: "domaincontroller"
-  tasks:
-    - name: "change  mobile number"
+- tasks:
+    - name: "change mobile number"
       win_domain_user:
         name: "{{ rd_option_username }}"
         state: "present"
         path: "OU=AnsibleUsers,DC=ansible,DC=local"
         attributes:
-          mobile: "{{ rd_option_mobielnummer }}"
+           mobile: "{{ rd_option_mobielnummer }}"
+         

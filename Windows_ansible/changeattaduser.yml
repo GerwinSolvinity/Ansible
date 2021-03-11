@@ -1,16 +1,4 @@
 ---
-- name: HOST"
-  hosts: "domaincontroller"
+- hosts: "domaincontroller"
   tasks:
-    - name: "Wijzingen van veld AD user"
-      win_domain_user:
-        name: "{{ rd_option_username }}"
-        state: "present"
-        path: "OU=AnsibleUsers,DC=ansible,DC=local"
-        attributes:
-          mobile: "{{ rd_option_mobielnummer }}"
-          title: "{{ rd_option_functie }}"
-          department: "{{ rd_option_department }}"
-          physicalDeliveryOfficeName: "{{ rd_option_office }}"
-          manager: "CN={{ rd_option_manager }},OU=AnsibleUsers,DC=ansible,DC=local"
-          displayName: " {{ rd_option_displaynaam }}"
+    - include_tasks: "changemobilenumberansible.yml"
