@@ -1,0 +1,14 @@
+---
+
+- name: "Aanpassen gebruikers account"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "Aanpassen gebruikers account"
+      win_domain_user:
+        name: "{{ rd_option_username }}"
+        state: "present"
+        attributes:
+          department: "{{ rd_option_department | default(omit) }}"
+          physicalDeliveryOfficeName: "{{ rd_option_office | default(omit) }}"
+          manager: "CN={{ rd_option_manager | default(omit) }},OU=AnsibleUsers,DC=ansible,DC=local"
+    

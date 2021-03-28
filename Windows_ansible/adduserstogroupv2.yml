@@ -1,0 +1,11 @@
+---
+- name: "Add users to group"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "Add user to group"
+      win_domain_user:
+        name: "{{ item }}"
+        groups_action: "add"
+        groups: "{{ rd_option_groupnames.split(',') }}"
+      loop: "{{ rd_option_username.split(',') }}"
+        

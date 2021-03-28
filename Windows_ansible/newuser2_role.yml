@@ -1,0 +1,22 @@
+---
+ 
+- name: "Create New User"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "Include role newuser2_role"
+      include_role:
+        name: "newuser2_role"
+      vars:
+        zinl_username: "{{ rd_option_username }}"
+        zinl_firstname: "{{ rd_option_firstname }}"
+        zinl_surname: "{{ rd_option_surname }}"
+        zinl_company2: "{{ rd_option_company2 }}"
+        zinl_company: "{{ rd_option_company }}"
+        zinl_mobilephone: "{{ rd_option_mobilephone }}"
+        zinl_department: "{{ rd_option_department }}"
+        zinl_office: "{{ rd_option_office }}"
+        zinl_manager: "{{ rd_option_manager }}"
+        zinl_email: "{{ rd_option_email }}"
+        zinl_displayname: "{{ rd_option_displaynaam }}"
+        zinl_sms: "{{ rd_option_sms }}"
+        zinl_functie: "{{ rd_option_functie }}"

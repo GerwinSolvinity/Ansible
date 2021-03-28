@@ -1,0 +1,37 @@
+---
+ 
+- name: "Check if the user exists"
+  win_domain_user:
+    name: "{{ zinl_username }}"
+    state: "query"
+  register: "user_check"
+- name: "Fail if user is found"
+  fail:
+    msg: "'{{ user_check.name }}' already exists"
+  when:
+    - "user_check.state == 'present'"
+- set_fact:
+    user_password: "aC{{ lookup('password', '/dev/null length=10 chars=digits') }}!"
+- name: "Create user"
+  win_domain_user:
+    name: "{{ zinl_username }}"
+    firstname: "{{ zinl_firstname }}"
+    surname: "{{ zinl_surname }}"
+    upn: "{{ zinl_email }}"
+    password: "{{ user_password }}"
+    company: "{{ zinl_company }}"
+    state: "present"
+    groups:
+      - "Domain Users"
+      - "Ansible users"
+      - "Ansible users2"
+    groups_action: "add"
+    path: "OU=AnsibleUsers,DC=ansible,DC=local"
+    attributes:
+      mobile: "{{ zinl_mobilephone }}"
+      title: "{{ zinl_functie }}"
+      department: "{{ zinl_department }}"
+      physicalDeliveryOfficeName: "{{ zinl_office }}"
+      manager: "CN={{ zinl_manager }},OU=AnsibleUsers,DC=ansible,DC=local"
+      sAMAccountName: "{{ zinl_username }}"
+      displayName: " {{ zinl_displayname }}"
