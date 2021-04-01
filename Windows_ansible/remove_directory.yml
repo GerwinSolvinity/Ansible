@@ -1,0 +1,8 @@
+---
+  
+- hosts: "domaincontroller"
+  tasks:
+    - name: "remove directory on remote host"
+      win_file:
+        path: "E:\\rundeck\\{{ rd_option_foldername }}"
+        state: "absent"

@@ -1,4 +1,5 @@
 ---
+  
 - hosts: "domaincontroller"
   tasks:
     - name: "create directory on remote host"
