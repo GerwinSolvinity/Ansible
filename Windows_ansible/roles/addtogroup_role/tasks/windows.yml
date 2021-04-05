@@ -1,0 +1,8 @@
+---
+
+- name: "Add user to group"
+  win_domain_user:
+    name: "{{ item }}"
+    groups_action: "add"
+    groups: "{{ zinl_groupnames.split(',') + zinl_groupnames2.split(',') }}"
+  loop: "{{ zinl_username.split(',') }}"

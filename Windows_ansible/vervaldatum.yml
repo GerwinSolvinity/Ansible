@@ -1,0 +1,6 @@
+---
+- name: "aanpassen verval datum"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "aanpassen vervaldatum"
+      win_shell: Set-ADAccountExpiration -Identity {{ rd_option_username }} -DateTime {{ rd_option_vervaldatum }}

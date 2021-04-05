@@ -20,3 +20,4 @@
         zinl_displayname: "{{ rd_option_displaynaam }}"
         zinl_sms: "{{ rd_option_sms }}"
         zinl_functie: "{{ rd_option_functie }}"
+        zinl_vervaldatum: "{{ rd_option_vervaldatum }}"

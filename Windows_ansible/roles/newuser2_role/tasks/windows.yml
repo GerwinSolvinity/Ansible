@@ -34,4 +34,6 @@
       physicalDeliveryOfficeName: "{{ zinl_office }}"
       manager: "CN={{ zinl_manager }},OU=AnsibleUsers,DC=ansible,DC=local"
       sAMAccountName: "{{ zinl_username }}"
-      displayName: " {{ zinl_displayname }}"
+      displayName: "{{ zinl_displayname }}"
+- name: "aanpassen vervaldatum"
+  win_shell: Set-ADAccountExpiration -Identity {{ zinl_username }} -DateTime {{ zinl_vervaldatum }}

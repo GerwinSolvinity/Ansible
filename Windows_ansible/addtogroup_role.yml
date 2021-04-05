@@ -1,0 +1,12 @@
+---
+ 
+- name: "add user to group(s)"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "Include role addtogroup"
+      include_role:
+        name: "addtogroup_role"
+      vars:
+        zinl_username: "{{ rd_option_username }}"
+        zinl_groupnames: "{{ rd_option_groupnames }}"
+        zinl_groupnames2: "{{ rd_option_groupnames2 }}"

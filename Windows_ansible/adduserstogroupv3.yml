@@ -6,5 +6,5 @@
       win_domain_user:
         name: "{{ item }}"
         groups_action: "add"
-        groups: "{{ rd_option_groupnames.split(',') }}"
+        groups: "{{ rd_option_groupnames.split(',') | combine(rd_option_groupnames2.split(',')) }}"
       loop: "{{ rd_option_username.split(',') }}"
