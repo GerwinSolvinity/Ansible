@@ -2,9 +2,17 @@
 - name: "Add user to group"
   hosts: "domaincontroller"
   tasks:
-    - name: "Add user to group"
-      win_domain_user:
-        name: "{{ item }}"
-        groups_action: "add"
-        groups: "{{ rd_option_groupnames.split(',') | combine(rd_option_groupnames2.split(',')) }}"
-      loop: "{{ rd_option_username.split(',') }}"
+  - name: "default variable zetten als var leeg is"
+  set_fact:
+    rd_option_groupnames: "domain users"
+    rd_option_groupnames2: "domain users"
+  - name: "default var when var is empty"
+    set_fact:
+      rd_option_groupnames: "domain users"
+      rd_option_groupnames2: "domain users"
+  - name: "Add user to group"
+    win_domain_user:
+      name: "{{ item }}"
+      groups_action: "add"
+      groups: "{{ rd_option_groupnames.split(',')  + (rd_option_groupnames2.split(',')) }}"
+    loop: "{{ rd_option_username.split(',') }}"

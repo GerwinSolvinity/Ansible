@@ -1,0 +1,16 @@
+---
+
+- name: "enable gebuikers account"
+  hosts: "domaincontroller"
+  tasks:
+    - name: "enable gebruikers account"
+      win_domain_user:
+        name: "{{ rd_option_username }}"
+        state: "present"
+        path: "OU=vervallen,DC=ansible,DC=local"
+    - name: "aanpassen vervaldatum"
+      win_shell: "Set-ADAccountExpiration -Identity {{ rd_option_username }} -DateTime {{ rd_option_vervaldatum }}"
+    - name: "verplaats account naar OU vervallen"
+      win_shell: |
+        $user = Get-ADUser -Server WIN2016HOST -Filter * -Properties * | ?{$_.SAMAccountName -eq '{{ rd_option_username }}'}
+        Move-ADObject -Identity $user.DistinguishedName -TargetPath "OU=AnsibleUsers,DC=ansible,DC=local" -Confirm:$false

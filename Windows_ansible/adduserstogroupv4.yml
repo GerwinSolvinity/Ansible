@@ -1,0 +1,18 @@
+---
+ 
+- hosts: "localhost"
+  gather_facts: No
+  tasks:
+    - name: "maak groep lijst "
+      vars:
+        groupsvar1: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ rd_option_groupnames | default('') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
+        groupsvar2: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ rd_option_groupnames2 | default('') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
+        groupsvar1_split: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ groupsvar1.split(',') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
+        groupsvar2_split: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ groupsvar2.split(',') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
+        groupsvar_combined: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ groupsvar1_split + groupsvar2_split | select() | list }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
+    - name: "Add user to group"
+      win_domain_user:
+        name: "{{ item }}"
+        groups_action: "add"
+        groups: "{{ groupsvars_combined }}"
+      loop: "{{ rd_option_username.split(',') }}"
