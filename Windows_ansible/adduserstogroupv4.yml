@@ -3,7 +3,7 @@
 - hosts: "localhost"
   gather_facts: No
   tasks:
-    - name: "maak groep lijst "
+    - name: "maak groeps lijst "
       vars:
         groupsvar1: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ rd_option_groupnames | default('') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
         groupsvar2: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ rd_option_groupnames2 | default('') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
