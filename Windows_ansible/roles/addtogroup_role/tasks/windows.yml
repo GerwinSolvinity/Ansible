@@ -4,6 +4,7 @@
   set_fact:
     rd_option_groupnames: "domain users"
     rd_option_groupnames2: "domain users"
+    rd_option_groupnames3: "domain users"
 - name: "Add user to group"
   win_domain_user:
     name: "{{ item }}"

@@ -10,3 +10,4 @@
         zinl_username: "{{ rd_option_username }}"
         zinl_groupnames: "{{ rd_option_groupnames }}"
         zinl_groupnames2: "{{ rd_option_groupnames2 }}"
+        zinl_groupnames3: "{{ rd_option_groupnames3 }}"

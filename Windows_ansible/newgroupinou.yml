@@ -1,0 +1,10 @@
+---
+- name: "create new group"
+  hosts: "domaincontroller"
+  tasks:
+    - win_domain_group:
+        name: "{{ rd_option_newgroup }}"
+        scope: "universal"
+        category: "security"
+        organizational_unit: "OU={{ rd_option_ouname }},OU=Ansiblegroups,DC=ansible,DC=local"
+        ignore_protection: "yes"

@@ -1,18 +1,19 @@
 ---
- 
-- hosts: "localhost"
-  gather_facts: No
+
+- name: "combineren van groupen in een lijst"
+  hosts: "domaincontroller"
+  vars:
+    var1: "{{ rd_option_groupnames | default('domain users') }}"
+    var2: "{{ rd_option_groupnames2 | default('domain users') }}"
+    var3: "{{ rd_option_groupnames3 | default('domain users') }}"
+    var1_split: "{{ var1.split(',') }}"
+    var2_split: "{{ var2.split(',') }}"
+    var3_split: "{{ var3.split(',') }}"
+    varlist: "{{ var1_split + var2_split + var3_split | select() | list }}"
   tasks:
-    - name: "maak groeps lijst "
-      vars:
-        groupsvar1: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ rd_option_groupnames | default('') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
-        groupsvar2: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ rd_option_groupnames2 | default('') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
-        groupsvar1_split: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ groupsvar1.split(',') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
-        groupsvar2_split: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ groupsvar2.split(',') }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
-        groupsvar_combined: "{​​​​​​​​​​​​​{​​​​​​​​​​​​​ groupsvar1_split + groupsvar2_split | select() | list }​​​​​​​​​​​​​}​​​​​​​​​​​​​"
     - name: "Add user to group"
       win_domain_user:
         name: "{{ item }}"
         groups_action: "add"
-        groups: "{{ groupsvars_combined }}"
+        groups: "{{ varlist }}"
       loop: "{{ rd_option_username.split(',') }}"

@@ -1,0 +1,13 @@
+---
+
+- name: "combineren van groupen in een lijst"
+  hosts: "domaincontroller"
+  vars:
+    var1: "{{ rd_option_group1 | default('domain users') }}"
+    var2: "{{ rd_option_group2 | default('domain users') }}"
+    var1_split: "{{ var1.split(',') }}"
+    var2_split: "{{ var2.split(',') }}"
+    varlist: "{{ var1_split + var2_split | select() | list }}"
+  tasks:
+    - debug:
+        msg: "{{ varlist }}"
